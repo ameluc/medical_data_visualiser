@@ -8,7 +8,7 @@
 
  Author : Améluc Ahognidjè <ameluc.ahognidje@protonmail.com>
  Date : 2026-02-17
- Version : 0.7.5
+ Version : 1.0.0
 """
 
 import matplotlib.pyplot as plt
@@ -55,5 +55,30 @@ def draw_cat_plot():
     )
 
     fig.savefig("catplot.png")
+
+    return fig
+
+def draw_heat_map():
+    """
+     This function draws a heat map after making some adjustment to to data.
+
+     Returns
+     -------
+         A heat map to see correlations inside the data.
+    """
+
+    df_heat = df[
+        (df["ap_lo"] <= df["ap_hi"]) &
+        (df["height"] >= df["height"].quantile(0.025)) &
+        (df["height"] <= df["height"].quantile(0.95)) &
+        (df["weight"] >= df["weight"].quantile(0.025)) &
+        (df["weight"] <= df["weight"].quantile(0.95))
+    ]
+    corr = df_heat.corr()
+    mask = np.triu(np.ones_like(corr, dtype=bool))
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    sns.heatmap(corr, mask=mask, annot=True, fmt=".1f", ax=ax)
+    fig.savefig("heatmap.png")
 
     return fig
