@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-df: pd.DataFrame = pd.read_csv("medical_examination.csv")
+df = pd.read_csv("medical_examination.csv")
 
 df["overweight"] = (df["weight"] / ((df["height"] /100)**2) > 25).astype(int)
 df["cholesterol"] = (df["cholesterol"]  > 1).astype(int)
@@ -70,9 +70,9 @@ def draw_heat_map():
     df_heat = df[
         (df["ap_lo"] <= df["ap_hi"]) &
         (df["height"] >= df["height"].quantile(0.025)) &
-        (df["height"] <= df["height"].quantile(0.95)) &
+        (df["height"] <= df["height"].quantile(0.975)) &
         (df["weight"] >= df["weight"].quantile(0.025)) &
-        (df["weight"] <= df["weight"].quantile(0.95))
+        (df["weight"] <= df["weight"].quantile(0.975))
     ]
     corr = df_heat.corr()
     mask = np.triu(np.ones_like(corr, dtype=bool))
