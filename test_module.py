@@ -7,7 +7,7 @@
 
  Author : Améluc Ahognidjè <ameluc.ahognidje@protonmail.com>
  Date : 2026-02-17
- Version : 0.5.0
+ Version : 1.0.0
 """
 
 import unittest
@@ -78,3 +78,170 @@ class CatPlotTestCase(unittest.TestCase):
         info = "Expected a different number of bars chart."
 
         self.assertEqual(actual, expected, info)
+
+class HeatMapTestCase(unittest.TestCase):
+    """
+     A class to group the unit tests about the heat map visualisation.
+    """
+
+    def setUp(self):
+        self.fig = medical_data_visualiser.draw_heat_map()
+        self.ax = self.fig.axes[0]
+
+    def test_heat_map_labels(self):
+        """
+         This test checks the labels of the heat map.
+        """
+
+        actual = [
+            label.get_text()
+            for label in self.ax.get_xticklabels()
+        ]
+
+        expected = [
+            "id",
+            "age",
+            "sex",
+            "height",
+            "weight",
+            "ap_hi",
+            "ap_lo",
+            "cholesterol",
+            "gluc",
+            "smoke",
+            "alco",
+            "active",
+            "cardio",
+            "overweight"
+        ]
+        info = """Expected heat map labels to be
+            "id",
+            "age",
+            "sex",
+            "height",
+            "weight",
+            "ap_hi",
+            "ap_lo",
+            "cholesterol",
+            "gluc",
+            "smoke",
+            "alco",
+            "active",
+            "cardio",
+            "overweight".
+        """
+
+        self.assertEqual(actual, expected, info)
+
+    def test_heat_map_values(self):
+        """
+         This test checks the values of the heat map.
+        """
+
+        actual = [
+            text.get_text()
+            for text in self.ax.get_default_bbox_extra_artists()
+            if isinstance(text, mpl.text.Text)
+        ]
+
+        print(actual)
+
+        expected = [
+            "0.0",
+            "0.0",
+            "-0.0",
+            "0.0",
+            "-0.1",
+            "0.5",
+            "0.0",
+            "0.1",
+            "0.1",
+            "0.3",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.2",
+            "0.1",
+            "0.0",
+            "0.2",
+            "0.1",
+            "0.0",
+            "0.1",
+            "-0.0",
+            "-0.1",
+            "0.1",
+            "0.0",
+            "0.2",
+            "0.0",
+            "0.1",
+            "-0.0",
+            "-0.0",
+            "0.1",
+            "0.0",
+            "0.1",
+            "0.4",
+            "-0.0",
+            "-0.0",
+            "0.3",
+            "0.2",
+            "0.1",
+            "-0.0",
+            "0.0",
+            "0.0",
+            "-0.0",
+            "-0.0",
+            "-0.0",
+            "0.2",
+            "0.1",
+            "0.1",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.3",
+            "0.0",
+            "-0.0",
+            "0.0",
+            "-0.0",
+            "-0.0",
+            "-0.0",
+            "0.0",
+            "0.0",
+            "-0.0",
+            "0.0",
+            "0.0",
+            "0.0",
+            "0.2",
+            "0.0",
+            "-0.0",
+            "0.2",
+            "0.1",
+            "0.3",
+            "0.2",
+            "0.1",
+            "-0.0",
+            "-0.0",
+            "-0.0",
+            "-0.0",
+            "0.1",
+            "-0.1",
+            "-0.1",
+            "0.7",
+            "0.0",
+            "0.2",
+            "0.1",
+            "0.1",
+            "-0.0",
+            "0.0",
+            "-0.0",
+            "0.1"
+        ]
+        info = "Expected different values in heat map."
+
+        self.assertEqual(actual, expected, info)
+
+if __name__ == "__main__":
+    unittest.main()
