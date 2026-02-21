@@ -8,7 +8,7 @@
 
  Author : Améluc Ahognidjè <ameluc.ahognidje@protonmail.com>
  Date : 2026-02-17
- Version : 1.0.0
+ Version : 1.5.0
 """
 
 import matplotlib.pyplot as plt
@@ -16,7 +16,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-df = pd.read_csv("medical_examination.csv")
+DATA_PATH = "./medical_examination.csv"
+
+df = pd.read_csv(DATA_PATH)
 
 df["overweight"] = (df["weight"] / ((df["height"] /100)**2) > 25).astype(int)
 df["cholesterol"] = (df["cholesterol"]  > 1).astype(int)
@@ -24,7 +26,8 @@ df["gluc"] = (df["gluc"]  > 1).astype(int)
 
 def draw_cat_plot():
     """
-     This function draws a categorical plot after making some adjustment to to data.
+     This function draws a categorical plot
+     after making some adjustment to the data.
 
      Returns
      -------
@@ -36,7 +39,6 @@ def draw_cat_plot():
         id_vars=["cardio"],
         value_vars=["cholesterol", "gluc", "smoke", "alco", "active", "overweight"]
     )
-
     df_cat = (
         df_cat
             .groupby(by=["cardio", "variable", "value"])
@@ -60,7 +62,8 @@ def draw_cat_plot():
 
 def draw_heat_map():
     """
-     This function draws a heat map after making some adjustment to to data.
+     This function draws a heat map
+     after making some adjustment to the data.
 
      Returns
      -------
@@ -76,7 +79,8 @@ def draw_heat_map():
     ]
     corr = df_heat.corr()
     mask = np.triu(np.ones_like(corr, dtype=bool))
-    fig, ax = plt.subplots(figsize=(10, 8))
+
+    fig, ax = plt.subplots(figsize=(12, 8))
 
     sns.heatmap(corr, mask=mask, annot=True, fmt=".1f", ax=ax)
     fig.savefig("heatmap.png")

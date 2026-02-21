@@ -143,9 +143,6 @@ class HeatMapTestCase(unittest.TestCase):
             for text in self.ax.get_default_bbox_extra_artists()
             if isinstance(text, mpl.text.Text)
         ]
-
-        print(actual)
-
         expected = [
             "0.0",
             "0.0",
